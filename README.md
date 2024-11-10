@@ -8,6 +8,10 @@
 
     git clone https://github.com/alastergrume/chatgpt_fastapi.git
 
+Зайдите в папку с проектом, выполнив команду в терминале:
+
+    cd .\chatgpt_fastapi\
+
 После успешного клонирования, для запуска приложения введите команду в терминале:
 
     docker compose up --build
