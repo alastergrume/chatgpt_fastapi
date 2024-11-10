@@ -1,6 +1,6 @@
 Для настройки приложения склонируйте репозиторий следующей командой:
 
-
+    https://github.com/alastergrume/chatgpt_fastapi.git
 
 Введите команду:
 
