@@ -55,6 +55,10 @@
     
     docker compose up --build
 
+Для запуска в фономвом режиме 
+
+    docker-compose up -d
+
 Приложение будт доступно по адресу: 
 
     http://YOUR_HOST_IP:8000/
