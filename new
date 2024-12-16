@@ -1,0 +1,109 @@
+Чтобы создать таблицу на основе предоставленного вами массива данных, мы можем воспользоваться комбинацией HTML и JavaScript. В этом примере я покажу, как сформировать таблицу, анализируя ваш массив stats. Мы будем использовать JavaScript для динамического построения содержимого таблицы.
+
+Вот пример кода, который вам поможет:
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Направление</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Данные будут вставлены сюда через JavaScript -->
+        </tbody>
+    </table>
+
+    <script>
+        const stats = [
+            { 
+                group: 'local', 
+                data: [
+                    {billsec: 1.25, dstchannel: 'my_trunk'}, 
+                    {billsec: 2, dstchannel: 'sophtphone'}
+                ] 
+            },
+            { 
+                group: 'office', 
+                data: [
+                    {billsec: 4.50, dstchannel: 'my_trunk2'}, 
+                    {billsec: 3.76, dstchannel: 'sophtphone_3'}
+                ] 
+            }
+        ];
+
+        const groupNames = stats.map(stat => stat.group);
+        const tableHeaderRow = document.createElement('tr');
+        tableHeaderRow.appendChild(document.createElement('th')).innerText = 'Направление';
+        groupNames.forEach(group => {
+            const th = document.createElement('th');
+            th.innerText = group;
+            tableHeaderRow.appendChild(th);
+        });
+        document.querySelector('#dataTable thead').appendChild(tableHeaderRow);
+
+        // Создаем строки таблицы
+        const billsecMap = {};
+        stats.forEach(stat => {
+            stat.data.forEach(item => {
+                const billsec = item.billsec;
+                const dstchannel = item.dstchannel;
+
+                if (!billsecMap[billsec]) {
+                    billsecMap[billsec] = {};
+                }
+                billsecMap[billsec][stat.group] = dstchannel;
+            });
+        });
+
+        for (const billsec in billsecMap) {
+            const row = document.createElement('tr');
+            row.appendChild(document.createElement('td')).innerText = billsec;
+            groupNames.forEach(group => {
+                const cell = document.createElement('td');
+                cell.innerText = billsecMap[billsec][group] || ''; // Заполняем ячейку данными
+                row.appendChild(cell);
+            });
+            document.querySelector('#dataTable tbody').appendChild(row);
+        }
+    </script>
+
+</body>
+</html>
+
+
+### Объяснение кода:
+
+1. HTML:
+   - Таблица создается с заголовком "Направление", после чего динамически добавляются заголовки для каждой группы из массива stats.
+
+2. JavaScript:
+   - Пройдя по массиву stats, мы собираем все данные в billsecMap, где ключами будут значения billsec, а значениями — объекты с dstchannel для каждой группы. 
+   - Затем мы пройдемся по каждому уникальному значению billsec и создадим строки таблицы. Каждая ячейка будет заполняться соответствующими dstchannel для группы или будет оставаться пустой, если данных нет.
+
+3. CSS:
+   - Мы добавили немного стилей, чтобы таблица выглядела более читабельно.
+
+Этот код создаст таблицу, в которой будет отображаться информация в соответствии с вашим требованием. Вы можете разместить этот код в файле HTML и открыть его в браузере, чтобы увидеть результат.
